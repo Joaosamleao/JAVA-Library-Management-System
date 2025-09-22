@@ -35,8 +35,25 @@ public abstract class Employee {
         this.emp_name = new_name;
     }
 
+    public int getWork_hours() {
+        return work_hours;
+    }
+
+    public void setWork_hours(int hours) {
+        this.work_hours = hours;
+    }
+
     public double getSalary() {
         return salary_total;
+    }
+
+    public void setPay_per_hour(double pay) {
+        this.salary_per_hour = pay;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s - Name: %s - Work Hours: %d", emp_id, emp_name, work_hours);
     }
     
 }

@@ -27,6 +27,9 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
 
     private int getEmployeeType() {
         int i;
+
+        System.out.println("Type 1 - Clerk | Type 2 - Janitor | Type 3 - Librarian | Type 4 - Manager");
+
         while(true) {
             try {
                 System.out.print("Employee type: ");
@@ -36,7 +39,7 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
                 if (i < 1 || i > 4) {
                     throw new InvalidInputException("Employee type is invalid. Please choose an index within 1-4.");
                 }
-                return i;
+                return i-1;
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             } catch (InputMismatchException e) {
@@ -173,21 +176,102 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
         }
     }
 
+    private boolean exists(String id) {
+        boolean exists = false;
+
+        for (Employee emp : employees) {
+            if (emp.getEmp_id().equals(id)) {
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    private String empByID() {
+        String i;
+        listObjects();
+
+        while(true) {
+            try {
+                System.out.print("Employee ID: ");
+                i = sc.nextLine();
+
+                if(!i.matches("\\d+")) {
+                    throw new InvalidInputException("The selected ID is not valid. Try again.");
+                } else if(!exists(i)) {
+                    throw new InvalidInputException("The selected ID does not belong to any employee. Try again.");
+                }
+                return i;
+            } catch (InvalidInputException e) {
+                e.getMessage();
+            }
+        }
+    } 
+
     @Override
     public void removeObject() {
+        String i = empByID();
 
-        System.out.print("Employee ID: ");
-        String i = sc.nextLine();
+        for (Employee emp : employees) {
+            if (emp.getEmp_id().equals(i)) {
+                employees.remove(emp);
+                System.out.print("Employee removed succesfully!");
+                return;
+            }
+        }
+    }
+
+    private void changeEmpType() {
+
     }
 
     @Override
     public void editObject() {
+        listObjects();
+        String id = empByID();
+
+        System.out.print("1 - Change employee type "
+                        + "2 - Change employee id"
+                        + "3 - Change employee name"
+                        + "4 - Change employee work hours"
+                        + "5 - Change employee pay per hour");
+        
+        int op = sc.nextInt();
+        Object i = null;
+
+        for(Employee emp : employees) {
+            if (emp.getEmp_id().matches(id)) {
+                i = emp;
+            }
+        }
+        
+        switch(op) {
+            case 1:
+                int newType = getEmployeeType();
+                
+            case 2:
+                String newId = getEmployeeID();
+                ((Employee) i).setEmp_id(newId);
+            case 3:
+                String newName = getEmployeeName();
+                ((Employee) i).setEmp_name(newName);
+            case 4:
+                int newWork_hours = getWorkHours();
+                ((Employee) i).setWork_hours(newWork_hours);
+            case 5:
+                double newPay_per_hour = getPayPerHour();
+                ((Employee) i).setPay_per_hour(newPay_per_hour);
+        }
 
     }
 
     @Override
     public void listObjects() {
 
+        for (Employee emp : employees) {
+            emp.toString();
+            System.out.print("");
+        } 
     }
 
     @Override
