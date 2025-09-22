@@ -31,13 +31,13 @@ public class BookManager implements ObjectDisplay, ObjectManagement, ObjectRetri
     }
 
     @Override
-    public void printObject(int i) {
+    public void printObject(String id) {
 
     }
 
     @Override
-    public Object getObject(Object i) {
-        return i;
+    public Object getObject(String id) {
+        return id;
     }
 
 }

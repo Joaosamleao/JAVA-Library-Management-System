@@ -39,7 +39,7 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
                 if (i < 1 || i > 4) {
                     throw new InvalidInputException("Employee type is invalid. Please choose an index within 1-4.");
                 }
-                return i-1;
+                return i;
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             } catch (InputMismatchException e) {
@@ -73,7 +73,7 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
         while(true) {
             try {
                 System.out.print("Employee Name: ");
-                name = sc.nextLine();
+                name = sc.nextLine().trim();
 
                 if (name.isEmpty()) {
                     throw new InvalidInputException("Error: Employee name cannot be empty.");
@@ -143,17 +143,17 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
         switch(i) {
             case 1:
                 employees.add(new Clerk(id, name, work_hours, pay_per_hour));
-                System.out.print("Clerk created succesfully!");
+                System.out.print("Operation successful.");
                 break;
             
             case 2:
                 employees.add(new Janitor(id, name, work_hours, pay_per_hour));
-                System.out.print("Janitor created succesfully!");
+                System.out.print("Operation successful.");
                 break;
             
             case 3:
                 employees.add(new Librarian(id, name, work_hours, pay_per_hour));
-                System.out.print("Librarian created succesfully!");
+                System.out.print("Operation successful.");
                 break;
 
             case 4:
@@ -167,41 +167,38 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
                 }
 
                 if (managerExists) {
-                    System.out.print("A manager is already in your system, cannot create another!");
+                    System.out.print("Error: You cannot register multiple managers.");
                     return;
                 } else {
                     employees.add(new Manager(id, name, work_hours, pay_per_hour));
-                    System.out.print("Manager created succesfully!");
+                    System.out.print("Operation successful.");
                 }
         }
     }
 
     private boolean exists(String id) {
-        boolean exists = false;
-
         for (Employee emp : employees) {
             if (emp.getEmp_id().equals(id)) {
-                exists = true;
+                return true;
             }
         }
-        return exists;
+        return false;
     }
 
     private String empByID() {
-        String i;
-        listObjects();
+        String id;
 
         while(true) {
             try {
                 System.out.print("Employee ID: ");
-                i = sc.nextLine();
+                id = sc.nextLine();
 
-                if(!i.matches("\\d+")) {
+                if(!id.matches("\\d+")) {
                     throw new InvalidInputException("The selected ID is not valid. Try again.");
-                } else if(!exists(i)) {
-                    throw new InvalidInputException("The selected ID does not belong to any employee. Try again.");
+                } else if(!exists(id)) {
+                    throw new InvalidInputException("Error: The given ID does not exist: " + id);
                 }
-                return i;
+                return id;
             } catch (InvalidInputException e) {
                 e.getMessage();
             }
@@ -221,14 +218,20 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
         }
     }
 
-    private void changeEmpType() {
+    // private void changeEmpType(Employee emp, int i) {
+    //     String id = emp.getEmp_id();
+    //     String name = emp.getEmp_name();
+    //     int work_hours = emp.getWork_hours();
+    //     double pay_per_hour = emp.getPay_per_hour();
 
-    }
+
+    // }
 
     @Override
     public void editObject() {
         listObjects();
         String id = empByID();
+        Object i = getObject(id);
 
         System.out.print("1 - Change employee type "
                         + "2 - Change employee id"
@@ -237,51 +240,62 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
                         + "5 - Change employee pay per hour");
         
         int op = sc.nextInt();
-        Object i = null;
-
-        for(Employee emp : employees) {
-            if (emp.getEmp_id().matches(id)) {
-                i = emp;
-            }
-        }
+        sc.nextLine();
         
         switch(op) {
             case 1:
-                int newType = getEmployeeType();
-                
+                // TO-DO
+                // Add or Remove?
+                break;
             case 2:
                 String newId = getEmployeeID();
                 ((Employee) i).setEmp_id(newId);
+                break;
             case 3:
                 String newName = getEmployeeName();
                 ((Employee) i).setEmp_name(newName);
+                break;
             case 4:
                 int newWork_hours = getWorkHours();
                 ((Employee) i).setWork_hours(newWork_hours);
+                break;
             case 5:
                 double newPay_per_hour = getPayPerHour();
                 ((Employee) i).setPay_per_hour(newPay_per_hour);
+                break;
         }
 
     }
 
     @Override
     public void listObjects() {
+        try {
 
-        for (Employee emp : employees) {
-            emp.toString();
-            System.out.print("");
+        } catch (NullPointerException e) {
+            System.out.print("Error: No employees registered in the system. Try again later.");
+        }
+        
+    }
+
+    @Override
+    public void printObject(String id) {
+        id = empByID();
+
+        while (true) {
+            try {
+                for(Employee emp : employees) {
+                    if (emp.getEmp_id().matches(id)) {
+                        emp.toString();
+                    }
+                }
+            } catch (NullPointerException e) {
+                System.out.print("Error: No employees registered in the system. Try again later.");
+            }
         } 
     }
 
     @Override
-    public void printObject(int i) {
-
-    }
-
-    @Override
-    public Object getObject(Object i) {
+    public Object getObject(String i) {
         return i;
-    }
-
+    } 
 }
