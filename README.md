@@ -1,4 +1,5 @@
-# Library Management System (Console Demo) - To be Finished
+# Library Management System (Console Demo) - 
+# To be Finished
 
 A simple Java console application that showcases SOLID principles and the Chain of Responsibility (CoR) design pattern through a small, in-memory "library management" domain.
 
