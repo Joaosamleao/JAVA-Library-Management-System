@@ -86,6 +86,7 @@ Currently, Main wires up the Chain of Responsibility (Level1 -> Level2 -> Level3
 
 ## TO-DO
 - Implement RequestManager.java
+- Implement Chain of Responsibility (CoF)
 - Implement UI/UI.java to collect input and invoke managers/handlers
 
 ## Features In Review
