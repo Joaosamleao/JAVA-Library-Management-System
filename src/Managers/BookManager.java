@@ -19,7 +19,7 @@ public class BookManager implements ObjectDisplay, ObjectManagement, ObjectRetri
     }
 
     private String normalizeISBN(String s) {
-        return s == null ? "" : s.replaceAll("[\\\s-]", "");
+        return s == null ? "" : s.replaceAll("[\\s]", "");
     }
 
     private String getBookISBN() {
@@ -114,7 +114,6 @@ public class BookManager implements ObjectDisplay, ObjectManagement, ObjectRetri
                     throw new InvalidInputException("Error: Edition contain invalid characters. Try again.");
                 }
 
-                // Valid non-blank edition; return it
                 return edition;
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
