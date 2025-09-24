@@ -14,4 +14,24 @@ public class Book {
         this.ISBN = ISBN;
     }
 
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ISBN: %s, Title: %s, Edition: %s, Author: %s", ISBN, name, publisher, author);
+    }
 }
