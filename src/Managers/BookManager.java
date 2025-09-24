@@ -6,6 +6,9 @@ import Interfaces.ObjectRetrieval;
 
 public class BookManager implements ObjectDisplay, ObjectManagement, ObjectRetrieval {
 
+    ArrayList<Book> books;
+    Scanner sc = new Scanner(System.in);
+
     public BookManager() {
         this.books = new ArrayList<Book>();
     }
