@@ -256,7 +256,7 @@ public class BookManager implements ObjectDisplay, ObjectManagement, ObjectRetri
     @Override
     public void listObjects() {
         if (books.isEmpty()) {
-            System.out.println("No books available.");
+            System.out.println("Error: No books registered in the system.");
             return;
         }
 

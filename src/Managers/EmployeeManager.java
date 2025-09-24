@@ -187,7 +187,7 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
     }
 
     private String empByID() {
-        String id = "";
+        String id;
 
         while(true) {
             try {
@@ -197,11 +197,14 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
 
                 if (id.isEmpty()) {
                     throw new InvalidInputException("Employee ID cannot be empty.");
-                } else if(!id.matches("\\d+")) {
+                }
+                if(!id.matches("\\d+")) {
                     throw new InvalidInputException("Error: The selected ID is not valid. Try again.");
-                } else if(!exists(id)) {
+                }
+                if(!exists(id)) {
                     throw new InvalidInputException("Error: The given ID does not exist: " + id);
                 }
+
                 return id;
             } catch (InvalidInputException e) {
                 System.out.print(e.getMessage());
@@ -212,24 +215,9 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
     @Override
     public void removeObject() {
         String idToRemove = empByID();
-
-        for(int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getEmp_id().equals(idToRemove)) {
-                employees.remove(i);
-                System.out.println("Employee removed succesfully.");
-                break;
-            }
-        }
+        employees.removeIf(emp -> emp.getEmp_id().equals(idToRemove));
+        System.out.print("Operation Successful");
     }
-
-    // private void changeEmpType(Employee emp, int i) {
-    //     String id = emp.getEmp_id();
-    //     String name = emp.getEmp_name();
-    //     int work_hours = emp.getWork_hours();
-    //     double pay_per_hour = emp.getPay_per_hour();
-
-
-    // }
 
     private Employee createNewInstance(int type, Employee oldEmployee) {
         String id = oldEmployee.getEmp_id();
@@ -315,15 +303,21 @@ public class EmployeeManager implements ObjectDisplay, ObjectManagement, ObjectR
     @Override
     public void listObjects() {
         if (employees.isEmpty()) {
-            System.out.println("Error: No employees registered in the system.");
+            System.out.print("Error: No employees registered in the system.");
+            return;
         }
 
-        int i = 1;
+        System.out.printf("%-10s %-20s %-15s %-15s %-15s\n", "ID", "Name", "Type", "Work Hours", "Pay per Hour");
+        System.out.println("--------------------------------------------------------------------------");
 
         for (Employee emp : employees) {
-            System.out.println(i + " - " + emp.toString());
-            i++;
-        } 
+            System.out.printf("%-10s %-20s %-15s %-15s %-15s");
+            emp.getEmp_id();
+            emp.getEmp_name();
+            emp.getClass().getSimpleName();
+            emp.getWork_hours();
+            emp.getPay_per_hour();
+        }
     }
 
     @Override
