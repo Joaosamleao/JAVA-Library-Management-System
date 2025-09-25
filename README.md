@@ -1,5 +1,7 @@
 # Library Management System (Console Demo) - TBC
 
+**[🇧🇷 Português (Brasil)](README.pt-BR.md) | 🇺🇸 English**
+
 A simple Java console application that showcases SOLID principles and the Chain of Responsibility (CoR) design pattern through a small, in-memory "library management" domain.
 
 This project prioritizes clean architecture and testable components over a full user interface. Made by a student to test his current knowledge in Java.
